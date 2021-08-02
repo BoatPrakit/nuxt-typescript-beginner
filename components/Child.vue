@@ -21,7 +21,7 @@ export default class Child extends Vue implements UserProperties {
   name: string = ''
   lastname: string = ''
   @Emit('submit-form')
-  submitForm() {
+  submitForm(): UserProperties {
     return {
       name: this.name,
       lastname: this.lastname,
