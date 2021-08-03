@@ -10,20 +10,29 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component } from 'nuxt-property-decorator'
+import { Component, Watch, mixins } from 'nuxt-property-decorator'
 import UserProperties from '@/interfaces/UserProperties'
+import Api from '~/mixins/api'
 @Component
-export default class Index extends Vue implements UserProperties {
+export default class Index extends mixins(Api) implements UserProperties {
   message: string = 'First Message'
   num: number = 0
   name: string = ''
   lastname: string = ''
 
+  async mounted() {
+    const res = await this.fetchApi()
+    if (res) console.log(res.data)
+  }
+
   handleSubmit({ name, lastname }: UserProperties) {
-    console.log(name, lastname)
     this.name = name
     this.lastname = lastname
+  }
+
+  @Watch('name')
+  logName() {
+    console.log(this.name)
   }
 
   increment(): void {
